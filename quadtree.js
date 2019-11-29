@@ -56,25 +56,24 @@ class QuadTree{
         this.capacity = capacity;
     }
     insertPoint(point){
-        for (p in this.points){
-            if (p.compareTo(point)) return;
+        for (let p in this.points){
+            if (this.points[p].compareTo(point)) return;
         }
         if (!this.boundary.contains(point)) return;
         if (this.points.length < this.capacity && !this.isDivided) this.points.push(point);
         else {
-            if (!this.isDivided) subdivide();
+            if (!this.isDivided) this.subdivide();
             this.northEast.insertPoint(point);
             this.northWest.insertPoint(point);
             this.southEast.insertPoint(point);
             this.southWest.insertPoint(point);
         }
         if (this.isDivided){
-            for (p in this.points){
-                var tempP = this.points[p];
-                this.northEast.insertPoint(point);
-                this.northWest.insertPoint(point);
-                this.southEast.insertPoint(point);
-                this.southWest.insertPoint(point);
+            for (let p in this.points){
+                this.northEast.insertPoint(this.points[p]);
+                this.northWest.insertPoint(this.points[p]);
+                this.southEast.insertPoint(this.points[p]);
+                this.southWest.insertPoint(this.points[p]);
             }
             this.points = [];
         }
@@ -96,33 +95,71 @@ class QuadTree{
         this.southWest = new QuadTree(sw, this.capacity, this.pane);
         this.isDivided=true;
     }
-    printout(tree, toReturn, recLevel){
+    printout(){
+        return this.printoutHelper(this, "", "");
+    }
+    printoutHelper(tree, toReturn, recLevel){
         recLevel += "= ";
         if(tree.isDivided){
-            toReturn += this.printout(tree.northEast, "", recLevel);
-            toReturn += toReturn + this.printout(tree.northWest, "", recLevel);
-            toReturn += toReturn + this.printout(tree.southEast, "", recLevel);
-            toReturn += toReturn + this.printout(tree.southWest, "", recLevel);
+            toReturn += this.printoutHelper(tree.northEast, "", recLevel);
+            toReturn += this.printoutHelper(tree.northWest, "", recLevel);
+            toReturn += this.printoutHelper(tree.southEast, "", recLevel);
+            toReturn += this.printoutHelper(tree.southWest, "", recLevel);
         }
         else {
-            if (tree.points.length > 0) {toReturn+="\n";}
-            for (var p in tree.points){
+            if (tree.points.length > 0) {toReturn+="<br />";}
+            for (let p in tree.points){
                 if (p < tree.points.length-1){
-                    toReturn += recLevel + tree.points[p.asString()] + "\n";
+                    toReturn += recLevel + tree.points[p].asString() + "<br />";
                 }
-                else toReturn += recLevel + tree.points[p.asString()];
+                else {toReturn += recLevel + tree.points[p].asString();}
             }
         }
         return toReturn;
     }
+    setTraverseListHelper(){
+        var traverseList = [];
+        if (this.isDivided){
+            for (let i in this.southWest.setTraverseListHelper()){
+                traverseList.push(this.southWest.setTraverseListHelper()[i]);
+            }
+            for (let i in this.southEast.setTraverseListHelper()){
+                traverseList.push(this.southEast.setTraverseListHelper()[i]);
+            }
+            for (let i in this.northWest.setTraverseListHelper()){
+                traverseList.push(this.northWest.setTraverseListHelper()[i]);
+            }
+            for (let i in this.northEast.setTraverseListHelper()){
+                traverseList.push(this.northEast.setTraverseListHelper()[i]);
+            }
+
+        }
+        for (let i in this.points){
+            traverseList.push(this.points[i]);
+        }
+        return traverseList;
+    }
+    setTraverseList(){
+        this.traverseList = this.setTraverseListHelper();
+    }
+
 }
 
 var boundary = new Boundary(0,0,500,500);
 var quadTree = new QuadTree(boundary, 1);
-var point = new Point(200,200);
+var point4 = new Point(30, 30);
+var point3 = new Point(20,400);
+var point2 = new Point (20, 300);
 var point1 = new Point(300,300);
+var point = new Point(200,200);
+quadTree.insertPoint(new Point(400,100));
+quadTree.insertPoint(point4);
+quadTree.insertPoint(point3);
+quadTree.insertPoint(point2);
 quadTree.insertPoint(point1);
 quadTree.insertPoint(point);
-// document.write(point.asString());
-document.write(quadTree.printout(quadTree, "", ""));
+quadTree.setTraverseList();
+for (let p in quadTree.traverseList){
+    document.write(quadTree.traverseList[p].asString() + "<br />")
+}
 
