@@ -147,17 +147,10 @@ class QuadTree{
 
 var boundary = new Boundary(0,0,500,500);
 var quadTree = new QuadTree(boundary, 1);
-var point4 = new Point(30, 30);
-var point3 = new Point(20,400);
-var point2 = new Point (20, 300);
-var point1 = new Point(300,300);
-var point = new Point(200,200);
-quadTree.insertPoint(new Point(400,100));
-quadTree.insertPoint(point4);
-quadTree.insertPoint(point3);
-quadTree.insertPoint(point2);
-quadTree.insertPoint(point1);
-quadTree.insertPoint(point);
+for(let i = 0; i < 100; i++) {
+    quadTree.insertPoint(new Point(Math.random(),Math.random()));
+}
+
 quadTree.setTraverseList();
 for (let p in quadTree.traverseList){
     document.write(quadTree.traverseList[p].asString() + "<br />")
