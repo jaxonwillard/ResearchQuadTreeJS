@@ -50,6 +50,7 @@ class Boundary{
 
 class KTree{
     boundary;
+    children = [];
     capacity;
     traverseList = [];
     points = [];
@@ -67,12 +68,13 @@ class KTree{
         if (this.points.length < this.capacity && !this.isDivided) this.points.push(point);
         else {
             if (!this.isDivided) this.subdivide();
-            
+            this.children.forEach(child => child.insertPoint(point));
         }
-
+        if (this.isDivided){
+          this.points.forEach(p => this.children.forEach(child => child.insertPoint(p)));
+          this.points = [];
+        }
     }
-
-
     insertPoint(point){
         for (let p in this.points){
             if (this.points[p].compareTo(point)) return;
@@ -97,6 +99,9 @@ class KTree{
         }
     }
 
+    subdivide(){
+        
+    }
 
 
 
