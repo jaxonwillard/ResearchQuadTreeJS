@@ -147,12 +147,12 @@ class QuadTree{
 
 var boundary = new Boundary(0,0,500,500);
 var quadTree = new QuadTree(boundary, 1);
-for(let i = 0; i < 100; i++) {
+for(let i = 0; i < 1000; i++) {
     quadTree.insertPoint(new Point(Math.random(),Math.random()));
 }
-
+document.write(quadTree.printout());
 quadTree.setTraverseList();
-for (let p in quadTree.traverseList){
-    document.write(quadTree.traverseList[p].asString() + "<br />")
-}
+// for (let p in quadTree.traverseList){
+//     document.write(quadTree.traverseList[p].asString() + "<br />")
+// }
 

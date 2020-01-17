@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="314f0ccd-e3ab-4569-acf3-e421304552be" name="Default Changelist" comment="" />
+    <list default="true" id="314f0ccd-e3ab-4569-acf3-e421304552be" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quadtree.js" beforeDir="false" afterPath="$PROJECT_DIR$/quadtree.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +28,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ResearchQuadTreeJS-hang" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../K-tree" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -71,6 +75,7 @@
       <workItem from="1577373949617" duration="4000" />
       <workItem from="1578535208268" duration="404000" />
       <workItem from="1578787477813" duration="638000" />
+      <workItem from="1579277649195" duration="930000" />
     </task>
     <servers />
   </component>
