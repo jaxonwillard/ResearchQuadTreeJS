@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="314f0ccd-e3ab-4569-acf3-e421304552be" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/K-tree.js" beforeDir="false" afterPath="$PROJECT_DIR$/K-tree.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,7 +27,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../magPhyxVis" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../CS2610/cs2610-Willard-Jaxon-Assn0" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -68,7 +69,7 @@
       <option name="presentableId" value="Default" />
       <updated>1574882887891</updated>
       <workItem from="1574882889214" duration="14362000" />
-      <workItem from="1579278823752" duration="3770000" />
+      <workItem from="1579278823752" duration="21503000" />
     </task>
     <servers />
   </component>
