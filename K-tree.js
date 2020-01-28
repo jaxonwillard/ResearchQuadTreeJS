@@ -41,6 +41,26 @@ class Boundary{
         }
         return true;
     }
+    toString(){
+        let toReturn = "[";
+        for (let i=0; i<this.dimensionMins.length; i++){
+
+            toReturn = toReturn.concat(this.dimensionMins[i] );
+            if (i+1 !== this.dimensionMins.length){
+                toReturn = toReturn.concat(", ")
+            }
+        }
+        toReturn = toReturn.concat("]  [");
+        for (let i=0; i<this.dimensionMaxs.length; i++){
+
+            toReturn = toReturn.concat(this.dimensionMaxs[i] );
+            if (i+1 !== this.dimensionMaxs.length){
+                toReturn = toReturn.concat(", ")
+            }
+        }
+        toReturn = toReturn.concat("]");
+        return toReturn;
+    }
 }
 class KTree{
     boundary;
@@ -82,14 +102,16 @@ class KTree{
             let mins = [];
             let maxs = [];
             for (let j=0; j<map.length; j++){
-
                 if (map[j] === "0"){
-                    mins.splice(0,0,this.boundary.dimensionMins[j]);
-                    maxs.splice(0,0,(this.boundary.dimensionMaxs[j] + this.boundary.dimensionMins[j])/2);
+                    mins.push(this.boundary.dimensionMins[j]);
+                    maxs.push((this.boundary.dimensionMaxs[j] + this.boundary.dimensionMins[j])/2);
                 }
-                if (map[j] === "1"){
-                    mins.splice(0,0,(this.boundary.dimensionMaxs[j] + this.boundary.dimensionMins[j])/2);
-                    maxs.splice(0,0,this.boundary.dimensionMaxs[j]);
+                else if (map[j] === "1"){
+                    mins.push((this.boundary.dimensionMaxs[j] + this.boundary.dimensionMins[j])/2);
+                    maxs.push(this.boundary.dimensionMaxs[j]);
+                }
+                else {
+                    document.writeln("failed <br>");
                 }
             }
             this.children.push(new KTree(new Boundary(mins, maxs), this.capacity));
@@ -133,28 +155,21 @@ setTraverseList(){
 }
 
 }
-let boundary = new Boundary([0,0], [11,11]);
+let boundary = new Boundary([0,0], [10,10]);
 let ktree = new KTree(boundary, 1);
 
 let ind = 0;
-for (let i=1; i<10; i++){
-    for (let j=1; j<10; j++){
-        ktree.insertPoint(new Point([i*5, j*5]));
+for (let i=1; i<3; i++){
+    for (let j=1; j<3; j++){
+        ktree.insertPoint(new Point([i,j]));
         ind++;
     }
 }
-document.write("ind: " + ind + "<br>");
-ktree.insertPoint(new Point([3,3]));
-ktree.insertPoint(new Point([3,5]));
-ktree.insertPoint(new Point([3,10]));
-
 ktree.setTraverseList();
-document.write("traversal list: " + ktree.traverseList.length + "<br>");
-
-for (let i=0; i< ktree.traverseList.length; i++){
-    document.write(ktree.traverseList[i]+"<br>");
+document.writeln("num inserted: " + ind + "<br>traverseList.length: " + ktree.traverseList.length + "<br>");
+for (let point in ktree.traverseList){
+    document.writeln(ktree.traverseList[point] + "<br>");
 }
-
 
 
 
