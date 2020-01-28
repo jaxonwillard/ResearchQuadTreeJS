@@ -15,19 +15,16 @@ class Point{
         }
         toReturn = toReturn.concat("]");
         return toReturn;
-
     }
-    // compareTo(p){
-    //     return this.coordinates[0] === p.coordinates[0] && this.coordinates[1] === p.coordinates[1] ;
-    // }
-    // print(){
-    //     document.write( this.coordinates[0] + " " + this.coordinates[1]);
-    // }
-    // asString(){
-    //     return "[" + this.coordinates[0] + "," + this.coordinates[1] + "]";
-    // }
+    equals(p){
+        for (let i=0; i<this.coordinates.length; i++){
+            if (this.coordinates[i] !== p.coordinates[i]){
+                return false;
+            }
+        }
+        return true;
+    }
 }
-
 class Boundary{
     dimensionMins = [];
     dimensionMaxs = [];
@@ -39,15 +36,12 @@ class Boundary{
     }
     contains(point){
         for (let i=0; i<point.coordinates.length; i++){
-            if (point.coordinates[i] < this.dimensionMins[i] || point.coordinates[i] > this.dimensionMaxs[i])
+            if (point.coordinates[i] <= this.dimensionMins[i] || point.coordinates[i] > this.dimensionMaxs[i])
                 return false;
         }
         return true;
     }
 }
-
-
-
 class KTree{
     boundary;
     children = [];
@@ -59,52 +53,28 @@ class KTree{
         this.boundary = boundary;
         this.capacity = capacity;
     }
-
-    // insertPoint(point) {
-    //     document.write("<br>");
-    //     if (!this.boundary.contains(point)) {
-    //         document.write("doesnt contain");
-    //         return; }
-    //     document.write("contains");
-    //     if (this.points.length < this.capacity && !this.isDivided)
-    //         {this.points.push(point);}
-    //     else {
-    //         if (!this.isDivided) {this.subdivide();}
-    //
-    //         for (let child = 0; child < this.children.length; child++) {
-    //             this.children[child].insertPoint(point);
-    //         }
-    //     }
-    //     if (this.isDivided) {
-    //         for (let i=0; i<this.points.length; i++){
-    //             for (let j=0; j<this.children.length; j++){
-    //                 this.children[j].insertPoint(this.points[i]);
-    //             }
-    //         }
-    //         // this.points.forEach(p => this.children.forEach(child => child.insertPoint(p)));
-    //         this.points.splice(0,this.points.length);
-    //     }
-    //
-    // }
     insertPoint(point){
-
-        if (!this.boundary.contains(point)) return;
-        if (this.points.length < this.capacity && !this.isDivided) this.points.push(point);
-        else {
-            if (!this.isDivided) this.subdivide();
-            for (let i=0; i<this.children.length; i++){
-                this.children[i].insertPoint(point);
-            }
-        }
-        if (this.isDivided){
-            for (let p=0; p<this.points.length; p++){
+        if (this.boundary.contains(point)){
+            if (this.isDivided){
                 for (let i=0; i<this.children.length; i++){
-                    this.children[i].insertPoint(this.points[p]);
+                    this.children[i].insertPoint(point);
                 }
             }
-            this.points = [];
+            else{
+                this.points.push(point);
+                if (this.points.length > this.capacity){
+                    this.subdivide();
+                    for (let i=0; i<this.points.length; i++){
+                        for (let j=0; j<this.children.length; j++){
+                            this.children[j].insertPoint(this.points[i]);
+                        }
+                    }
+                    this.points = [];
+                }
+            }
         }
     }
+
 
     subdivide(){
         for (let i=0; i<2 ** this.boundary.dimensionMins.length ; i++){
@@ -122,7 +92,7 @@ class KTree{
                     maxs.splice(0,0,this.boundary.dimensionMaxs[j]);
                 }
             }
-            this.children.push(new KTree(new Boundary(mins, maxs)));
+            this.children.push(new KTree(new Boundary(mins, maxs), this.capacity));
         }
         this.isDivided = true;
 
@@ -143,34 +113,103 @@ class KTree{
         }
         return arr;
     }
-
-
-
-
-}
-class Iterate {
-    iterate(dimensions) {
-        for (let i = 0; i < 2 ** dimensions; i++) {
-            let arr = [];
-            let binary = (i>>>0).toString(2);
-            for (let i=0; i<binary.length; i++){
-                arr.push(binary[i]);
+setTraverseListHelper(){
+    var traverseList = [];
+    if (this.isDivided){
+        for (let child=0; child<this.children.length; child++){
+            for (let i=0; i<this.children[child].setTraverseListHelper().length; i++){
+                traverseList.push(this.children[child].setTraverseListHelper()[i]);
             }
-            arr = this.fillOutArray(arr, dimensions);
-            document.write(arr + "<br>");
         }
+
     }
-    fillOutArray(arr, dimensions){
-        while(arr.length < dimensions){
-            arr.splice(0,0,0);
-        }
-        return arr;
+    for (let i=0; i<this.points.length; i++){
+        traverseList.push(this.points[i]);
+    }
+    return traverseList;
+}
+setTraverseList(){
+    this.traverseList = this.setTraverseListHelper();
+}
+
+}
+let boundary = new Boundary([0,0], [11,11]);
+let ktree = new KTree(boundary, 1);
+
+let ind = 0;
+for (let i=1; i<10; i++){
+    for (let j=1; j<10; j++){
+        ktree.insertPoint(new Point([i*5, j*5]));
+        ind++;
     }
 }
-let boundary = new Boundary([0,0],[5,5]);
-let ktree = new KTree(boundary, 1);
-ktree.insertPoint(new Point([1,0]));
-ktree.insertPoint(new Point([1,0]));
+document.write("ind: " + ind + "<br>");
+ktree.insertPoint(new Point([3,3]));
+ktree.insertPoint(new Point([3,5]));
+ktree.insertPoint(new Point([3,10]));
+
+ktree.setTraverseList();
+document.write("traversal list: " + ktree.traverseList.length + "<br>");
+
+for (let i=0; i< ktree.traverseList.length; i++){
+    document.write(ktree.traverseList[i]+"<br>");
+}
+
+
+
+
+
+
+
+
+
+
+// printout(){
+//     return this.printoutHelper(this, "", "");
+// }
+// printoutHelper(tree, toReturn, recLevel){
+//     recLevel += "= ";
+//     if(tree.isDivided){
+//         for (let i=0; i<tree.children.length; i++){
+//             toReturn += this.printoutHelper(tree.children[i]);
+//         }
+//     }
+//     else {
+//         if (tree.points.length > 0) {toReturn+="<br />";}
+//         for (let p=0; p<tree.points.length; p++){
+//             if (p < tree.points.length-1){
+//                 toReturn += recLevel + tree.points[p].asString() + "<br />";
+//             }
+//             else {toReturn += recLevel + tree.points[p].asString();}
+//         }
+//     }
+//     return toReturn;
+// }
+// setTraverseListHelper(){
+//     var traverseList = [];
+//     if (this.isDivided){
+//         for (let i in this.southWest.setTraverseListHelper()){
+//             traverseList.push(this.southWest.setTraverseListHelper()[i]);
+//         }
+//         for (let i in this.southEast.setTraverseListHelper()){
+//             traverseList.push(this.southEast.setTraverseListHelper()[i]);
+//         }
+//         for (let i in this.northWest.setTraverseListHelper()){
+//             traverseList.push(this.northWest.setTraverseListHelper()[i]);
+//         }
+//         for (let i in this.northEast.setTraverseListHelper()){
+//             traverseList.push(this.northEast.setTraverseListHelper()[i]);
+//         }
+//
+//     }
+//     for (let i in this.points){
+//         traverseList.push(this.points[i]);
+//     }
+//     return traverseList;
+// }
+// setTraverseList(){
+//     this.traverseList = this.setTraverseListHelper();
+// }
 
 
 

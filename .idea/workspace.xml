@@ -35,7 +35,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs.cucumber.cucumber_node_package_dir" value="" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -70,6 +70,8 @@
       <updated>1574882887891</updated>
       <workItem from="1574882889214" duration="14362000" />
       <workItem from="1579278823752" duration="21503000" />
+      <workItem from="1579630139452" duration="5545000" />
+      <workItem from="1580095448805" duration="8684000" />
     </task>
     <servers />
   </component>
