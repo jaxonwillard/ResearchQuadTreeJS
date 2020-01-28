@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="314f0ccd-e3ab-4569-acf3-e421304552be" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/K-tree.js" beforeDir="false" afterPath="$PROJECT_DIR$/K-tree.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -71,7 +70,7 @@
       <workItem from="1574882889214" duration="14362000" />
       <workItem from="1579278823752" duration="21503000" />
       <workItem from="1579630139452" duration="5545000" />
-      <workItem from="1580095448805" duration="8684000" />
+      <workItem from="1580095448805" duration="10042000" />
     </task>
     <servers />
   </component>
